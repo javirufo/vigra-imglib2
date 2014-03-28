@@ -8,8 +8,7 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>1.93</version>
-		<relativePath/>
+		<version>1.100</version>
 	</parent>
 
 	<groupId>net.imglib2.vigra</groupId>
@@ -21,7 +20,7 @@
 	<description>This example shows to integrate VIGRA and ImgLib2.</description>
 
 	<properties>
-		<scifio.version>0.7.2</scifio.version>
+		<imglib2.version>2.0.0-SNAPSHOT</imglib2.version>
 	</properties>
 
 	<dependencies>
@@ -47,9 +46,16 @@
 			<plugin>
 				<groupId>com.github.maven-nar</groupId>
 				<artifactId>nar-maven-plugin</artifactId>
-				<version>3.0.0-SNAPSHOT</version>
+				<version>3.0.0-rc-2</version>
 				<extensions>true</extensions>
 				<configuration>
+					<cpp>
+
+						<includePaths>
+							<includePath>/home/usuario/vigra/include</includePath>
+						</includePaths>
+
+					</cpp>
 					<libraries>
 						<library>
 							<type>jni</type>
@@ -61,6 +67,9 @@
 								<name>vigraimpex</name>
 							</sysLib>
 						</sysLibs>
+						<options>
+							<option>-L/opt/local/lib/</option>
+						</options>
 					</linker>
 				</configuration>
 			</plugin>
@@ -75,7 +84,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>Example</mainClass>
+					<mainClass>Example2</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -83,12 +92,12 @@
 
 	<profiles>
 		<profile>
-                        <id>only-eclipse</id>
-                        <activation>
-                                <property>
-                                        <name>m2e.version</name>
-                                </property>
-                        </activation>
+			<id>only-eclipse</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
 			<build>
 				<pluginManagement>
 					<plugins>
@@ -118,7 +127,7 @@
 											<pluginExecutionFilter>
 												<groupId>com.github.maven-nar</groupId>
 												<artifactId>nar-maven-plugin</artifactId>
-												<versionRange>3.0.0-SNAPSHOT</versionRange>
+												<versionRange>3.0.0-rc-2</versionRange>
 												<goals>
 													<goal>nar-compile</goal>
 													<goal>nar-download</goal>
@@ -128,6 +137,7 @@
 													<goal>nar-gnu-resources</goal>
 													<goal>nar-javah</goal>
 													<goal>nar-process-libraries</goal>
+													<goal>nar-prepare-package</goal>
 													<goal>nar-resources</goal>
 													<goal>nar-system-generate</goal>
 													<goal>nar-testCompile</goal>
